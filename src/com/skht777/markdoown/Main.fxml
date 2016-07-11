@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.WebView?>
+<GridPane onDragDropped="#dropFile" onDragOver="#dragFile" prefHeight="620.0" prefWidth="800.0"
+          xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
+          fx:controller="com.skht777.markdoown.MainController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0"/>
+        <ColumnConstraints hgrow="SOMETIMES"/>
+    </columnConstraints>
+    <children>
+        <TextArea fx:id="text" onKeyReleased="#convertMarkdown" stylesheets="@/resources/css/editor.css"/>
+        <WebView fx:id="view" GridPane.columnIndex="1"/>
+    </children>
+    <rowConstraints>
+        <RowConstraints vgrow="ALWAYS"/>
+    </rowConstraints>
+</GridPane>

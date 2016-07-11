@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8"/>
+    <script src="bower_components/jQuery/dist/jquery.min.js"></script>
+    <script src="bower_components/marked/lib/marked.js"></script>
+    <script src="bower_components/highlightjs/highlight.pack.min.js"></script>
+    <script>
+        marked.setOptions({
+            langPrefix: ''
+        });
+        function mark(src) {
+            var html = marked(src);
+
+            $('#result').html(html);
+
+            $('pre code').each(function (i, block) {
+                hljs.highlightBlock(block);
+            });
+            return src;
+        }
+    </script>
+
+    <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css"/>
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="bower_components/github-markdown-css/github-markdown.css"/>
+</head>
+<body>
+<div class="container">
+    <div class="col-xs-12">
+        <div id="result"></div>
+    </div>
+</div>
+</div>
+</body>
+</html>
