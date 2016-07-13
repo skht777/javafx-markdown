@@ -5,7 +5,7 @@
 <?import javafx.scene.web.WebView?>
 <GridPane onDragDropped="#dropFile" onDragOver="#dragFile" prefHeight="620.0" prefWidth="800.0"
           xmlns="http://javafx.com/javafx/null" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="com.skht777.markdoown.MainController">
+          fx:controller="com.skht777.markdown.MainController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0"/>
         <ColumnConstraints hgrow="SOMETIMES"/>
