@@ -19,13 +19,12 @@ import java.util.ResourceBundle;
 /**
  * @author skht777
  */
-public class MainController implements Initializable {
+public class EditorController implements Initializable {
 
     @FXML
-    WebView view;
+    private WebView view;
     @FXML
-    TextArea text;
-
+    private TextArea text;
 
     @FXML
     public void convertMarkdown() {
@@ -53,7 +52,6 @@ public class MainController implements Initializable {
         e.setDropCompleted(status);
         e.consume();
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
