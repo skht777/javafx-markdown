@@ -5,15 +5,11 @@
     <script src="bower_components/jQuery/dist/jquery.min.js"></script>
     <script src="bower_components/marked/lib/marked.js"></script>
     <script src="bower_components/highlightjs/highlight.pack.min.js"></script>
+    <script src="markdown.js"></script>
     <script>
-        marked.setOptions({
-            langPrefix: ''
-        });
         function mark(src) {
             var html = marked(src);
-
             $('#result').html(html);
-
             $('pre code').each(function (i, block) {
                 hljs.highlightBlock(block);
             });

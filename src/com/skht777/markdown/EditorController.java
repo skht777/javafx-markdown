@@ -3,7 +3,6 @@
  */
 package com.skht777.markdown;
 
-import javafx.concurrent.Worker;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
@@ -14,6 +13,7 @@ import netscape.javascript.JSObject;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 /**
@@ -25,12 +25,11 @@ public class EditorController implements Initializable {
     private WebView view;
     @FXML
     private TextArea text;
+    private JSObject window;
 
     @FXML
     public void convertMarkdown() {
-        if (view.getEngine().getLoadWorker().getState() != Worker.State.SUCCEEDED) return;
-        JSObject js = (JSObject) view.getEngine().executeScript("window");
-        js.call("mark", text.getText());
+        Optional.ofNullable(window).ifPresent(js -> js.call("mark", text.getText()));
     }
 
     @FXML
@@ -56,6 +55,9 @@ public class EditorController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         view.getEngine().load(getClass().getResource("/resources/web/markdown.html").toExternalForm());
+        view.getEngine().setOnAlert(e -> {
+            if ("command:ready".equals(e.getData())) window = (JSObject) view.getEngine().executeScript("window");
+        });
     }
 
 }
