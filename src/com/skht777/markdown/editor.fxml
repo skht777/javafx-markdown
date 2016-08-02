@@ -5,8 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.WebView?>
 <GridPane stylesheets="@/resources/css/editor.css" xmlns="http://javafx.com/javafx/null"
-          xmlns:fx="http://javafx.com/fxml/1" onDragDropped="#dropFile"
-          onDragOver="#dragFile" fx:controller="com.skht777.markdown.EditorController">
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skht777.markdown.EditorController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0"/>
         <ColumnConstraints hgrow="SOMETIMES"/>

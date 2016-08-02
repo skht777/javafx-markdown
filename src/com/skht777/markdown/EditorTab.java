@@ -17,17 +17,8 @@ public class EditorTab extends Tab {
     @FXML
     private EditorController editorController;
 
-    public EditorTab(File file) {
-        super(file.getName());
-        load();
-    }
-
-    public EditorTab() {
-        super("名称未設定 " + countNew++);
-        load();
-    }
-
-    private void load() {
+    private EditorTab(String name) {
+        super(name);
         FXMLLoader loader = new FXMLLoader(getClass().getResource("tab.fxml"));
         loader.setController(this);
         loader.setRoot(this);
@@ -36,6 +27,20 @@ public class EditorTab extends Tab {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public EditorTab(File file) {
+        this(file.getName());
+        try {
+            CharacterStream stream = new CharacterStream(file);
+            editorController.setText(stream.getString());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public EditorTab() {
+        this("名称未設定 " + countNew++);
     }
 
 }

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+
 <?import javafx.scene.control.Tab?>
-<fx:root type="Tab" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
-    <fx:include fx:id="editor" style="-fx-padding: 0 1 1 1" source="editor.fxml"/>
+<?import javafx.scene.layout.BorderPane?>
+<fx:root type="Tab" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1">
+    <BorderPane style="-fx-padding: 0 1 1 1">
+        <center>
+            <fx:include fx:id="editor" source="editor.fxml"/>
+        </center>
+    </BorderPane>
 </fx:root>

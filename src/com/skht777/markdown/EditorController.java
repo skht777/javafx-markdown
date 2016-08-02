@@ -6,15 +6,15 @@ package com.skht777.markdown;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextArea;
-import javafx.scene.input.DragEvent;
-import javafx.scene.input.TransferMode;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.function.Consumer;
 
 /**
  * @author skht777
@@ -25,38 +25,31 @@ public class EditorController implements Initializable {
     private WebView view;
     @FXML
     private TextArea text;
+    private List<Consumer<JSObject>> runLater;
     private JSObject window;
 
     @FXML
     public void convertMarkdown() {
-        Optional.ofNullable(window).ifPresent(js -> js.call("mark", text.getText()));
+        Consumer<JSObject> consumer = js -> js.call("mark", text.getText());
+        if (Optional.ofNullable(window).isPresent()) consumer.accept(window);
+        else runLater.add(consumer);
     }
 
-    @FXML
-    public void dragFile(DragEvent e) {
-        if (e.getDragboard().hasFiles()) e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
-        e.consume();
-    }
-
-    @FXML
-    public void dropFile(DragEvent e) {
-        boolean status = false;
-        try {
-            text.setText(CharacterStream.decodeString(e.getDragboard().getFiles().get(0)));
-            convertMarkdown();
-            status = true;
-        } catch (IOException ex) {
-            ex.printStackTrace();
-        }
-        e.setDropCompleted(status);
-        e.consume();
+    public void setText(String value) {
+        text.setText(value);
+        convertMarkdown();
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        runLater = new ArrayList<>();
         view.getEngine().load(getClass().getResource("/resources/web/markdown.html").toExternalForm());
         view.getEngine().setOnAlert(e -> {
-            if ("command:ready".equals(e.getData())) window = (JSObject) view.getEngine().executeScript("window");
+            if ("command:ready".equals(e.getData())) {
+                window = (JSObject) view.getEngine().executeScript("window");
+                runLater.forEach(c -> c.accept(window));
+                runLater.clear();
+            }
         });
     }
 
