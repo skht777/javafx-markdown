@@ -27,7 +27,7 @@ public class CharacterStream {
     public CharacterStream(File file, Charset charset) throws IOException {
         byte[] buff = Files.readAllBytes(file.toPath());
         this.charset = Optional.ofNullable(charset).orElse(detectEncoding(buff));
-        decoded = new String(buff, charset);
+        decoded = new String(buff, this.charset);
     }
 
     /**
