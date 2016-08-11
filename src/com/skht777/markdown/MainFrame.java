@@ -34,15 +34,15 @@ public class MainFrame extends TabPane {
     }
 
     @FXML
-    public void dragFile(DragEvent e) {
+    public void dragOver(DragEvent e) {
         if (e.getDragboard().hasFiles() || e.getDragboard().hasImage())
             e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         e.consume();
     }
 
     @FXML
-    public void dropFile(DragEvent e) {
-        addTabs(e.getDragboard().getFiles());
+    public void dragDropped(DragEvent e) {
+        if (e.getDragboard().hasFiles()) addTabs(e.getDragboard().getFiles());
         e.setDropCompleted(true);
         e.consume();
     }

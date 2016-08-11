@@ -2,7 +2,6 @@ package com.skht777.markdown;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Tab;
 
 import java.io.File;
 import java.io.IOException;
@@ -10,7 +9,7 @@ import java.io.IOException;
 /**
  * @author skht777
  */
-public class EditorTab extends Tab {
+public class EditorTab extends DraggableTab {
 
     private static int countNew = 1;
 
