@@ -9,7 +9,10 @@ import javafx.scene.control.TextArea;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,6 +41,13 @@ public class EditorController implements Initializable {
     public void setText(String value) {
         text.setText(value);
         convertMarkdown();
+    }
+
+    public void save(File file) {
+        try {
+            Files.write(file.toPath(), text.getText().getBytes());
+        } catch (IOException e) {
+        }
     }
 
     @Override

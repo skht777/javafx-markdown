@@ -2,9 +2,12 @@ package com.skht777.markdown;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.stage.FileChooser;
+import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 /**
  * @author skht777
@@ -15,6 +18,7 @@ public class EditorTab extends DraggableTab {
 
     @FXML
     private EditorController editorController;
+    private File file;
 
     private EditorTab(String name) {
         super(name);
@@ -30,6 +34,7 @@ public class EditorTab extends DraggableTab {
 
     public EditorTab(File file) {
         this(file.getName());
+        this.file = file;
         try {
             CharacterStream stream = new CharacterStream(file);
             editorController.setText(stream.getString());
@@ -40,6 +45,25 @@ public class EditorTab extends DraggableTab {
 
     public EditorTab() {
         this("名称未設定 " + countNew++);
+    }
+
+    public boolean hasFile() {
+        return Optional.ofNullable(file).isPresent();
+    }
+
+    public void saveWithName(Window parent) {
+        FileChooser fc = new FileChooser();
+        fc.setTitle("保存先を指定");
+        fc.setInitialFileName(this.getText());
+        Optional.ofNullable(fc.showSaveDialog(parent)).ifPresent(f -> {
+            file = f;
+            save();
+        });
+    }
+
+    public void save() {
+        editorController.save(file);
+        setText(file.getName());
     }
 
 }

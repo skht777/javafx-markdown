@@ -63,12 +63,14 @@ public class MainFrame extends VBox {
 
     @FXML
     public void save() {
-
+        EditorTab selected = (EditorTab) tabPane.getSelectionModel().getSelectedItem();
+        if (selected.hasFile()) selected.save();
+        else saveWithName();
     }
 
     @FXML
     public void saveWithName() {
-
+        ((EditorTab) tabPane.getSelectionModel().getSelectedItem()).saveWithName(getScene().getWindow());
     }
 
     @FXML
