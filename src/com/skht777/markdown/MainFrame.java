@@ -3,34 +3,43 @@ package com.skht777.markdown;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
+import javafx.scene.layout.VBox;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author skht777
  */
-public class MainFrame extends TabPane {
+public class MainFrame extends VBox {
+
+    @FXML
+    private MenuBar menu;
+    @FXML
+    private TabPane tabPane;
 
     public MainFrame(List<String> args) throws IOException {
         super();
-        getTabs().addListener((ListChangeListener<Tab>) c -> {
-            getStyleClass().remove("nobar");
-            if (c.getList().size() <= 1) getStyleClass().add("nobar");
-        });
-        addTabs(args.stream().map(File::new).collect(Collectors.toList()));
-        if (getTabs().isEmpty()) getTabs().add(new EditorTab());
-
         FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
         loader.setController(this);
         loader.setRoot(this);
         loader.load();
+
+        menu.setUseSystemMenuBar(true);
+        tabPane.getTabs().addListener((ListChangeListener<Tab>) c -> {
+            tabPane.getStyleClass().remove("nobar");
+            if (c.getList().size() <= 2) tabPane.getStyleClass().add("nobar");
+        });
+        newTab(args.stream().map(File::new).toArray(File[]::new));
+        if (tabPane.getTabs().size() == 1) tabPane.getTabs().add(new EditorTab());
+        tabPane.getSelectionModel().selectFirst();
     }
 
     @FXML
@@ -42,13 +51,38 @@ public class MainFrame extends TabPane {
 
     @FXML
     public void dragDropped(DragEvent e) {
-        if (e.getDragboard().hasFiles()) addTabs(e.getDragboard().getFiles());
+        if (e.getDragboard().hasFiles()) newTab(e.getDragboard().getFiles().stream().toArray(File[]::new));
         e.setDropCompleted(true);
         e.consume();
     }
 
-    private void addTabs(List<File> files) {
-        files.stream().filter(File::isFile).map(EditorTab::new).forEachOrdered(getTabs()::add);
+    @FXML
+    public void print() {
+
+    }
+
+    @FXML
+    public void save() {
+
+    }
+
+    @FXML
+    public void saveWithName() {
+
+    }
+
+    @FXML
+    public void newTab() {
+        newTab(new File[0]);
+    }
+
+    private void newTab(File... files) {
+        int num = tabPane.getTabs().size() - 1;
+        if (files.length != 0) {
+            Arrays.stream(files).filter(File::isFile).map(EditorTab::new).forEachOrdered(f -> tabPane.getTabs().add(num, f));
+        } else {
+            tabPane.getTabs().add(num, new EditorTab());
+        }
     }
 
 }

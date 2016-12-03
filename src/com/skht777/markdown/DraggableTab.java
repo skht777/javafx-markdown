@@ -49,6 +49,10 @@ public class DraggableTab extends Tab {
         markerStage.setScene(new Scene(markerStack));
     }
 
+    public DraggableTab() {
+        this("");
+    }
+
     /**
      * Create a new draggable tab. This can be added to any normal TabPane,
      * however a TabPane with draggable tabs must *only* have DraggableTabs,
@@ -58,6 +62,7 @@ public class DraggableTab extends Tab {
      * @param text the text to appear on the tag label.
      */
     public DraggableTab(String text) {
+        super();
         nameLabel = new Label(text);
         setGraphic(nameLabel);
         detachable = true;

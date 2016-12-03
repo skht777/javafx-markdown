@@ -1,7 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
-<?import javafx.scene.control.TabPane?>
-<fx:root stylesheets="@/resources/css/main.css" type="TabPane"
-         xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" onDragDropped="#dragDropped"
-         onDragOver="#dragOver"/>
+<?import com.skht777.markdown.DraggableTab?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.VBox?>
+<fx:root type="VBox" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <MenuBar fx:id="menu">
+            <menus>
+                <Menu mnemonicParsing="false" text="ファイル">
+                    <items>
+                        <MenuItem mnemonicParsing="false" onAction="#newTab" text="新規"/>
+                        <MenuItem mnemonicParsing="false" onAction="#save" text="保存"/>
+                        <MenuItem mnemonicParsing="false" onAction="#saveWithName" text="名前を付けて保存"/>
+                        <MenuItem mnemonicParsing="false" onAction="#print" text="プリント"/>
+                        <MenuItem mnemonicParsing="false" text="終了"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="Delete"/>
+                    </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                    <items>
+                        <MenuItem mnemonicParsing="false" text="About"/>
+                    </items>
+                </Menu>
+            </menus>
+        </MenuBar>
+        <TabPane fx:id="tabPane" onDragDropped="#dragDropped" onDragOver="#dragOver"
+                 stylesheets="@/resources/css/main.css">
+            <tabs>
+                <DraggableTab closable="false" text="+"/>
+            </tabs>
+        </TabPane>
+    </children>
+</fx:root>
