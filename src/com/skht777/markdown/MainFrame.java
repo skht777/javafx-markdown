@@ -33,58 +33,60 @@ public class MainFrame extends VBox {
         loader.load();
 
         menu.setUseSystemMenuBar(true);
+        tabPane.getStyleClass().add("nobar");
         tabPane.getTabs().addListener((ListChangeListener<Tab>) c -> {
-            tabPane.getStyleClass().remove("nobar");
-            if (c.getList().size() <= 2) tabPane.getStyleClass().add("nobar");
+            if (c.getList().size() > 2) tabPane.getStyleClass().remove("nobar");
+            else tabPane.getStyleClass().add("nobar");
         });
-        newTab(args.stream().map(File::new).toArray(File[]::new));
-        if (tabPane.getTabs().size() == 1) tabPane.getTabs().add(new EditorTab());
-        tabPane.getSelectionModel().selectFirst();
+
+        File[] files = args.stream().map(File::new).toArray(File[]::new);
+        if (Arrays.asList(files).isEmpty()) newTab();
+        else newTab(files);
     }
 
     @FXML
-    public void dragOver(DragEvent e) {
+    private void dragOver(DragEvent e) {
         if (e.getDragboard().hasFiles() || e.getDragboard().hasImage())
             e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
         e.consume();
     }
 
     @FXML
-    public void dragDropped(DragEvent e) {
+    private void dragDropped(DragEvent e) {
         if (e.getDragboard().hasFiles()) newTab(e.getDragboard().getFiles().stream().toArray(File[]::new));
         e.setDropCompleted(true);
         e.consume();
     }
 
     @FXML
-    public void print() {
+    private void print() {
 
     }
 
     @FXML
-    public void save() {
+    private void save() {
         EditorTab selected = (EditorTab) tabPane.getSelectionModel().getSelectedItem();
         if (selected.hasFile()) selected.save();
         else saveWithName();
     }
 
     @FXML
-    public void saveWithName() {
+    private void saveWithName() {
         ((EditorTab) tabPane.getSelectionModel().getSelectedItem()).saveWithName(getScene().getWindow());
     }
 
     @FXML
-    public void newTab() {
-        newTab(new File[0]);
+    private void newTab() {
+        newTab(new EditorTab());
     }
 
-    private void newTab(File... files) {
-        int num = tabPane.getTabs().size() - 1;
-        if (files.length != 0) {
-            Arrays.stream(files).filter(File::isFile).map(EditorTab::new).forEachOrdered(f -> tabPane.getTabs().add(num, f));
-        } else {
-            tabPane.getTabs().add(num, new EditorTab());
-        }
+    private void newTab(Tab t) {
+        tabPane.getTabs().add(tabPane.getTabs().size() - 1, t);
+        tabPane.getSelectionModel().select(tabPane.getTabs().size() - 2);
+    }
+
+    private void newTab(File[] files) {
+        Arrays.stream(files).filter(File::isFile).map(EditorTab::new).forEachOrdered(this::newTab);
     }
 
 }
