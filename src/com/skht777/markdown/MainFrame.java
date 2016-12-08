@@ -3,6 +3,7 @@ package com.skht777.markdown;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.print.PrinterJob;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
@@ -14,6 +15,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author skht777
@@ -60,7 +62,11 @@ public class MainFrame extends VBox {
 
     @FXML
     private void print() {
-
+        Optional.ofNullable(PrinterJob.createPrinterJob()).ifPresent(pjob -> {
+            if (pjob.showPrintDialog(getScene().getWindow()))
+                ((EditorTab) tabPane.getSelectionModel().getSelectedItem()).print(pjob);
+            pjob.endJob();
+        });
     }
 
     @FXML

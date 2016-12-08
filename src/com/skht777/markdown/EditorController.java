@@ -5,6 +5,7 @@ package com.skht777.markdown;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.print.PrinterJob;
 import javafx.scene.control.TextArea;
 import javafx.scene.web.WebView;
 import netscape.javascript.JSObject;
@@ -41,6 +42,10 @@ public class EditorController implements Initializable {
     public void setText(String value) {
         text.setText(value);
         convertMarkdown();
+    }
+
+    public void print(PrinterJob job) {
+        view.getEngine().print(job);
     }
 
     public void save(File file) {

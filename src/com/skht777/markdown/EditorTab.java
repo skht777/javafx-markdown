@@ -2,6 +2,7 @@ package com.skht777.markdown;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.print.PrinterJob;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -45,6 +46,10 @@ public class EditorTab extends DraggableTab {
 
     public EditorTab() {
         this("名称未設定 " + countNew++);
+    }
+
+    public void print(PrinterJob job) {
+        editorController.print(job);
     }
 
     public boolean hasFile() {
