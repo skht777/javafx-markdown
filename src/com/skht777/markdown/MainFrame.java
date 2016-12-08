@@ -43,7 +43,9 @@ public class MainFrame extends VBox {
 
         File[] files = args.stream().map(File::new).toArray(File[]::new);
         if (Arrays.asList(files).isEmpty()) newTab();
-        else newTab(files);
+        newTab(files);
+
+        tabPane.getTabs().get(tabPane.getTabs().size() - 1).setOnSelectionChanged(e -> newTab());
     }
 
     @FXML

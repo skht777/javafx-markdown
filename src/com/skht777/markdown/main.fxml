@@ -31,7 +31,7 @@
         <TabPane fx:id="tabPane" onDragDropped="#dragDropped" onDragOver="#dragOver"
                  stylesheets="@/resources/css/main.css">
             <tabs>
-                <DraggableTab onSelectionChanged="#newTab" closable="false" text="+"/>
+                <DraggableTab closable="false" text="+"/>
             </tabs>
         </TabPane>
     </children>
