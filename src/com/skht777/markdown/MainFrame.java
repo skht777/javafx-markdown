@@ -9,7 +9,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.BorderPane;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,7 +20,7 @@ import java.util.Optional;
 /**
  * @author skht777
  */
-public class MainFrame extends VBox {
+public class MainFrame extends BorderPane {
 
     @FXML
     private MenuBar menu;
@@ -35,9 +35,8 @@ public class MainFrame extends VBox {
         loader.load();
 
         menu.setUseSystemMenuBar(true);
-        tabPane.getStyleClass().add("nobar");
         tabPane.getTabs().addListener((ListChangeListener<Tab>) c -> {
-            if (c.getList().size() > 2) tabPane.getStyleClass().remove("nobar");
+            if (tabPane.getTabs().size() > 2) tabPane.getStyleClass().remove("nobar");
             else tabPane.getStyleClass().add("nobar");
         });
 
