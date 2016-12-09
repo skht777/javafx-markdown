@@ -44,8 +44,11 @@ public class EditorController implements Initializable {
         convertMarkdown();
     }
 
-    public void print(PrinterJob job) {
-        view.getEngine().print(job);
+    public void print() {
+        Optional.ofNullable(PrinterJob.createPrinterJob()).ifPresent(pjob -> {
+            if (pjob.showPrintDialog(view.getScene().getWindow())) view.getEngine().print(pjob);
+            pjob.endJob();
+        });
     }
 
     public void save(File file) {
