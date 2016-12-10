@@ -15,6 +15,7 @@ import java.util.Optional;
 public class EditorTab extends DraggableTab {
 
     private static int countNew = 1;
+    private String name;
 
     @FXML
     private EditorController editorController;
@@ -22,6 +23,7 @@ public class EditorTab extends DraggableTab {
 
     private EditorTab(String name) {
         super(name);
+        this.name = name;
         FXMLLoader loader = new FXMLLoader(getClass().getResource("tab.fxml"));
         loader.setController(this);
         loader.setRoot(this);
@@ -58,7 +60,7 @@ public class EditorTab extends DraggableTab {
     public void saveWithName(Window parent) {
         FileChooser fc = new FileChooser();
         fc.setTitle("保存先を指定");
-        fc.setInitialFileName(this.getText());
+        fc.setInitialFileName(name);
         Optional.ofNullable(fc.showSaveDialog(parent)).ifPresent(f -> {
             file = f;
             save();
@@ -67,7 +69,8 @@ public class EditorTab extends DraggableTab {
 
     public void save() {
         editorController.save(file);
-        setText(file.getName());
+        name = file.getName();
+        setLabelText(name);
     }
 
 }
