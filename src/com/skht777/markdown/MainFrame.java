@@ -12,8 +12,8 @@ import javafx.scene.layout.BorderPane;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * @author skht777
@@ -34,15 +34,12 @@ public class MainFrame extends BorderPane {
 
         menu.setUseSystemMenuBar(true);
         tabPane.getTabs().addListener((ListChangeListener<Tab>) c -> {
-            if (tabPane.getTabs().size() > 2) tabPane.getStyleClass().remove("nobar");
-            else tabPane.getStyleClass().add("nobar");
+            if (tabPane.getTabs().size() < 2) tabPane.getStyleClass().add("nobar");
+            else tabPane.getStyleClass().remove("nobar");
         });
 
-        File[] files = args.stream().map(File::new).toArray(File[]::new);
-        if (Arrays.asList(files).isEmpty()) newTab();
-        newTab(files);
-
-        tabPane.getTabs().get(tabPane.getTabs().size() - 1).setOnSelectionChanged(e -> newTab());
+        newTab(args.stream().map(File::new).filter(File::isFile));
+        if (tabPane.getTabs().isEmpty()) newTab();
     }
 
     @FXML
@@ -54,7 +51,7 @@ public class MainFrame extends BorderPane {
 
     @FXML
     private void dragDropped(DragEvent e) {
-        if (e.getDragboard().hasFiles()) newTab(e.getDragboard().getFiles().stream().toArray(File[]::new));
+        if (e.getDragboard().hasFiles()) newTab(e.getDragboard().getFiles().stream());
         e.setDropCompleted(true);
         e.consume();
     }
@@ -82,12 +79,12 @@ public class MainFrame extends BorderPane {
     }
 
     private void newTab(Tab t) {
-        tabPane.getTabs().add(tabPane.getTabs().size() - 1, t);
-        tabPane.getSelectionModel().select(tabPane.getTabs().size() - 2);
+        tabPane.getTabs().add(t);
+        tabPane.getSelectionModel().select(tabPane.getTabs().size() - 1);
     }
 
-    private void newTab(File[] files) {
-        Arrays.stream(files).filter(File::isFile).map(EditorTab::new).forEachOrdered(this::newTab);
+    private void newTab(Stream<File> files) {
+        files.map(EditorTab::new).forEachOrdered(this::newTab);
     }
 
 }

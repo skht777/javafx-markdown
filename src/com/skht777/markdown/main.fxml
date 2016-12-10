@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.skht777.markdown.DraggableTab?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
 <fx:root type="BorderPane" xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1">
     <center>
         <TabPane fx:id="tabPane" onDragDropped="#dragDropped" onDragOver="#dragOver"
-                 stylesheets="@/resources/css/main.css">
-            <tabs>
-                <DraggableTab closable="false" text="+"/>
-            </tabs>
-        </TabPane>
+                 stylesheets="@/resources/css/main.css"/>
     </center>
     <top>
         <MenuBar fx:id="menu" BorderPane.alignment="CENTER">
