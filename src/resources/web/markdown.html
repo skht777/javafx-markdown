@@ -1,32 +1,20 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8"/>
-    <script src="bower_components/jQuery/dist/jquery.min.js"></script>
-    <script src="bower_components/marked/lib/marked.js"></script>
-    <script src="bower_components/highlightjs/highlight.pack.min.js"></script>
+    <title></title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/0.6.1/marked.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/highlight.min.js"></script>
     <script src="markdown.js"></script>
-    <script>
-        function mark(src) {
-            var html = marked(src);
-            $('#result').html(html);
-            $('pre code').each(function (i, block) {
-                hljs.highlightBlock(block);
-            });
-            return src;
-        }
-    </script>
-
-    <link rel="stylesheet" href="bower_components/highlightjs/styles/github.css"/>
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css"/>
-    <link rel="stylesheet" href="bower_components/github-markdown-css/github-markdown.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.14.2/styles/github.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap-grid.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/github-markdown-css/3.0.1/github-markdown.min.css"/>
 </head>
 <body>
 <div class="container">
     <div class="col-xs-12">
         <div id="result"></div>
     </div>
-</div>
 </div>
 </body>
 </html>
