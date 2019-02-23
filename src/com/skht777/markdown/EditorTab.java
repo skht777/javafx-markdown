@@ -24,7 +24,7 @@ public class EditorTab extends DraggableTab {
     private EditorTab(String name) {
         super(name);
         this.name = name;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("tab.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/tab.fxml"));
         loader.setController(this);
         loader.setRoot(this);
         try {

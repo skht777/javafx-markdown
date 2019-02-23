@@ -27,7 +27,7 @@ public class MainFrame extends BorderPane {
 
     public MainFrame(List<String> args) throws IOException {
         super();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("main.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/main.fxml"));
         loader.setController(this);
         loader.setRoot(this);
         loader.load();

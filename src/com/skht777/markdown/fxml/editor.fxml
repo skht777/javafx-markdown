@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.WebView?>
-<GridPane stylesheets="@/resources/css/editor.css" xmlns="http://javafx.com/javafx/null"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.skht777.markdown.EditorController">
+
+<GridPane xmlns="http://javafx.com/javafx/8.0.102" xmlns:fx="http://javafx.com/fxml/1"
+          stylesheets="@editor.css" fx:controller="com.skht777.markdown.EditorController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0"/>
         <ColumnConstraints hgrow="SOMETIMES"/>
