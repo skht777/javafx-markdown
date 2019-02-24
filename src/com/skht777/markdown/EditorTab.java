@@ -2,6 +2,7 @@ package com.skht777.markdown;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Tab;
 import javafx.stage.FileChooser;
 import javafx.stage.Window;
 
@@ -12,7 +13,7 @@ import java.util.Optional;
 /**
  * @author skht777
  */
-public class EditorTab extends DraggableTab {
+public class EditorTab extends Tab {
 
     private static int countNew = 1;
     private String name;
@@ -70,7 +71,7 @@ public class EditorTab extends DraggableTab {
     public void save() {
         editorController.save(file);
         name = file.getName();
-        setLabelText(name);
+        setText(name);
     }
 
 }
