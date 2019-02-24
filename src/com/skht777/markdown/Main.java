@@ -11,7 +11,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            primaryStage.setScene(new Scene(MainFrame.prepare(getParameters().getUnnamed()), 800.0, 620.0));
+            primaryStage.setScene(new Scene(MainController.prepare(getParameters().getUnnamed()), 800.0, 620.0));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

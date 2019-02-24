@@ -23,16 +23,16 @@ import java.util.stream.Collectors;
 /**
  * @author skht777
  */
-public class MainFrame implements Initializable {
+public class MainController implements Initializable {
     @FXML
     private MenuBar menu;
     @FXML
     private TabPane tabPane;
 
     public static BorderPane prepare(List<String> args) throws IOException {
-        FXMLLoader loader = new FXMLLoader(MainFrame.class.getResource("fxml/main.fxml"));
+        FXMLLoader loader = new FXMLLoader(MainController.class.getResource("fxml/main.fxml"));
         BorderPane root = loader.load();
-        MainFrame controller = loader.getController();
+        MainController controller = loader.getController();
         List<File> files = args.stream().map(File::new).filter(File::isFile).collect(Collectors.toList());
         controller.addTabs(files);
         if (files.isEmpty()) {

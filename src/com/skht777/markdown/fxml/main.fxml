@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1"
-            fx:controller="com.skht777.markdown.MainFrame">
+            fx:controller="com.skht777.markdown.MainController">
     <center>
         <TabPane fx:id="tabPane" onDragDropped="#dragDropped" onDragOver="#dragOver" stylesheets="@main.css"/>
     </center>
