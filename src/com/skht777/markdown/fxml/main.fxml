@@ -10,13 +10,13 @@
     <top>
         <MenuBar fx:id="menu" BorderPane.alignment="CENTER">
             <menus>
-                <Menu mnemonicParsing="false" text="ファイル">
+                <Menu mnemonicParsing="false" text="File">
                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#newTab" text="新規"/>
-                        <MenuItem mnemonicParsing="false" onAction="#save" text="保存"/>
-                        <MenuItem mnemonicParsing="false" onAction="#saveWithName" text="名前を付けて保存"/>
-                        <MenuItem mnemonicParsing="false" onAction="#print" text="プリント"/>
-                        <MenuItem mnemonicParsing="false" text="終了"/>
+                        <MenuItem mnemonicParsing="false" onAction="#newTab" text="New"/>
+                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save"/>
+                        <MenuItem mnemonicParsing="false" onAction="#saveWithName" text="Save As..."/>
+                        <MenuItem mnemonicParsing="false" onAction="#print" text="Print"/>
+                        <MenuItem mnemonicParsing="false" text="Exit"/>
                     </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Edit">

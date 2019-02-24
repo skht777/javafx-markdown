@@ -47,7 +47,7 @@ public class EditorTab extends Tab {
     }
 
     public EditorTab() {
-        this("名称未設定 " + countNew++);
+        this("New " + countNew++);
     }
 
     public void print() {
@@ -60,7 +60,6 @@ public class EditorTab extends Tab {
 
     public void saveWithName(Window parent) {
         FileChooser fc = new FileChooser();
-        fc.setTitle("保存先を指定");
         fc.setInitialFileName(name);
         Optional.ofNullable(fc.showSaveDialog(parent)).ifPresent(f -> {
             file = f;
