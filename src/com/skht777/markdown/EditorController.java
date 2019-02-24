@@ -5,12 +5,10 @@ import javafx.fxml.Initializable;
 import javafx.print.PrinterJob;
 import javafx.scene.control.TextArea;
 import javafx.scene.web.WebView;
+import javafx.stage.Window;
 import netscape.javascript.JSObject;
 
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -38,25 +36,22 @@ public class EditorController implements Initializable {
         }
     }
 
-    public void setText(String value) {
+    public void convertMarkdown(String value) {
         text.setText(value);
         convertMarkdown();
     }
 
-    public void print() {
+    public String getText() {
+        return text.getText();
+    }
+
+    public void print(Window parent) {
         Optional.ofNullable(PrinterJob.createPrinterJob()).ifPresent(pjob -> {
-            if (pjob.showPrintDialog(view.getScene().getWindow())) {
+            if (pjob.showPrintDialog(parent)) {
                 view.getEngine().print(pjob);
             }
             pjob.endJob();
         });
-    }
-
-    public void save(File file) {
-        try {
-            Files.write(file.toPath(), text.getText().getBytes());
-        } catch (IOException e) {
-        }
     }
 
     @Override

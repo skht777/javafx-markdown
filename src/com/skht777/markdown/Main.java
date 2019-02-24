@@ -11,9 +11,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            primaryStage.setScene(new Scene(new MainFrame(getParameters().getUnnamed()), 800.0, 620.0));
+            primaryStage.setScene(new Scene(MainFrame.prepare(getParameters().getUnnamed()), 800.0, 620.0));
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new RuntimeException(e);
         }
         primaryStage.setTitle("Markdown Editor");
 //		primaryStage.setResizable(false);

@@ -3,47 +3,47 @@ package com.skht777.markdown;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
-import java.util.stream.Stream;
+import java.util.Optional;
+import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 /**
  * @author skht777
  */
-public class MainFrame extends BorderPane {
+public class MainFrame implements Initializable {
     @FXML
     private MenuBar menu;
     @FXML
     private TabPane tabPane;
 
-    public MainFrame(List<String> args) throws IOException {
-        super();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/main.fxml"));
-        loader.setController(this);
-        loader.setRoot(this);
-        loader.load();
-
-        menu.setUseSystemMenuBar(true);
-        tabPane.getTabs().addListener((ListChangeListener<Tab>) c -> {
-            if (tabPane.getTabs().size() < 2) {
-                tabPane.getStyleClass().add("nobar");
-            } else {
-                tabPane.getStyleClass().remove("nobar");
-            }
-        });
-
-        newTab(args.stream().map(File::new).filter(File::isFile));
-        if (tabPane.getTabs().isEmpty()) {
-            newTab();
+    public static BorderPane prepare(List<String> args) throws IOException {
+        FXMLLoader loader = new FXMLLoader(MainFrame.class.getResource("fxml/main.fxml"));
+        BorderPane root = loader.load();
+        MainFrame controller = loader.getController();
+        List<File> files = args.stream().map(File::new).filter(File::isFile).collect(Collectors.toList());
+        controller.addTabs(files);
+        if (files.isEmpty()) {
+            controller.addTab();
         }
+
+        return root;
+    }
+
+    private EditorTab getSelectedTab() {
+        return (EditorTab) tabPane.getSelectionModel().getSelectedItem();
     }
 
     @FXML
@@ -57,43 +57,65 @@ public class MainFrame extends BorderPane {
     @FXML
     private void dragDropped(DragEvent e) {
         if (e.getDragboard().hasFiles()) {
-            newTab(e.getDragboard().getFiles().stream());
+            addTabs(e.getDragboard().getFiles());
         }
         e.setDropCompleted(true);
         e.consume();
     }
 
     @FXML
+    private void open() {
+        EditorTab tab = getSelectedTab();
+        FileChooser fc = new FileChooser();
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("All types", "*.*"));
+        fc.setInitialFileName(tab.getText());
+        Optional.ofNullable(fc.showOpenDialog(tabPane.getScene().getWindow())).ifPresent(tab::open);
+    }
+
+    @FXML
     private void print() {
-        ((EditorTab) tabPane.getSelectionModel().getSelectedItem()).print();
+        getSelectedTab().getEditor().print(tabPane.getScene().getWindow());
     }
 
     @FXML
     private void save() {
-        EditorTab selected = (EditorTab) tabPane.getSelectionModel().getSelectedItem();
-        if (selected.hasFile()) {
-            selected.save();
-        } else {
-            saveWithName();
-        }
+        Optional.of(getSelectedTab()).filter(EditorTab::hasFile)
+                .ifPresentOrElse(EditorTab::save, this::saveWithName);
     }
 
     @FXML
     private void saveWithName() {
-        ((EditorTab) tabPane.getSelectionModel().getSelectedItem()).saveWithName(getScene().getWindow());
+        EditorTab tab = getSelectedTab();
+        FileChooser fc = new FileChooser();
+        fc.setInitialFileName(tab.getText());
+        fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("All types", "*.*"));
+        Optional.ofNullable(fc.showSaveDialog(tabPane.getScene().getWindow())).ifPresent(tab::save);
     }
 
     @FXML
-    private void newTab() {
-        newTab(new EditorTab());
+    private void addTab() {
+        addTab(new EditorTab());
     }
 
-    private void newTab(Tab t) {
+    private void addTab(Tab t) {
         tabPane.getTabs().add(t);
-        tabPane.getSelectionModel().select(tabPane.getTabs().size() - 1);
+        tabPane.getSelectionModel().select(t);
     }
 
-    private void newTab(Stream<File> files) {
-        files.map(EditorTab::new).forEachOrdered(this::newTab);
+    private void addTabs(List<File> files) {
+        files.stream().map(EditorTab::new).forEachOrdered(this::addTab);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        menu.setUseSystemMenuBar(true);
+        tabPane.setTabDragPolicy(TabPane.TabDragPolicy.REORDER);
+        tabPane.getTabs().addListener((ListChangeListener<Tab>) c -> {
+            if (tabPane.getTabs().size() < 2) {
+                tabPane.getStyleClass().add("nobar");
+            } else {
+                tabPane.getStyleClass().remove("nobar");
+            }
+        });
     }
 }

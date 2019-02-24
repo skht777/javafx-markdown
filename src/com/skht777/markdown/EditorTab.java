@@ -3,11 +3,10 @@ package com.skht777.markdown;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Tab;
-import javafx.stage.FileChooser;
-import javafx.stage.Window;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.Optional;
 
 /**
@@ -15,60 +14,59 @@ import java.util.Optional;
  */
 public class EditorTab extends Tab {
     private static int countNew = 1;
-    private String name;
 
     @FXML
     private EditorController editorController;
     private File file;
 
-    private EditorTab(String name) {
-        super(name);
-        this.name = name;
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/tab.fxml"));
-        loader.setController(this);
-        loader.setRoot(this);
-        try {
-            loader.load();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public EditorTab() {
+        this(null);
     }
 
     public EditorTab(File file) {
-        this(file.getName());
-        this.file = file;
         try {
-            CharacterStream stream = new CharacterStream(file);
-            editorController.setText(stream.getString());
+            FXMLLoader loader = new FXMLLoader(EditorTab.class.getResource("fxml/tab.fxml"));
+            loader.setRoot(this);
+            loader.setController(this);
+            loader.load();
+            Optional.ofNullable(file).ifPresentOrElse(this::open, () -> setText("New " + countNew++));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public EditorTab() {
-        this("New " + countNew++);
+    private void setFile(File file) {
+        this.file = file;
+        setText(file.getName());
     }
 
-    public void print() {
-        editorController.print();
+    public EditorController getEditor() {
+        return editorController;
     }
 
     public boolean hasFile() {
         return Optional.ofNullable(file).isPresent();
     }
 
-    public void saveWithName(Window parent) {
-        FileChooser fc = new FileChooser();
-        fc.setInitialFileName(name);
-        Optional.ofNullable(fc.showSaveDialog(parent)).ifPresent(f -> {
-            file = f;
-            save();
-        });
+    public void open(File file) {
+        try {
+            editorController.convertMarkdown(CharacterStream.decodeString(file));
+            setFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void save() {
-        editorController.save(file);
-        name = file.getName();
-        setText(name);
+        save(file);
+    }
+
+    public void save(File file) {
+        try {
+            Files.write(file.toPath(), editorController.getText().getBytes());
+            setFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
