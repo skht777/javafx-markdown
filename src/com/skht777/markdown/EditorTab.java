@@ -14,7 +14,6 @@ import java.util.Optional;
  * @author skht777
  */
 public class EditorTab extends Tab {
-
     private static int countNew = 1;
     private String name;
 
@@ -72,5 +71,4 @@ public class EditorTab extends Tab {
         name = file.getName();
         setText(name);
     }
-
 }

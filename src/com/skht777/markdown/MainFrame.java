@@ -19,7 +19,6 @@ import java.util.stream.Stream;
  * @author skht777
  */
 public class MainFrame extends BorderPane {
-
     @FXML
     private MenuBar menu;
     @FXML
@@ -34,24 +33,32 @@ public class MainFrame extends BorderPane {
 
         menu.setUseSystemMenuBar(true);
         tabPane.getTabs().addListener((ListChangeListener<Tab>) c -> {
-            if (tabPane.getTabs().size() < 2) tabPane.getStyleClass().add("nobar");
-            else tabPane.getStyleClass().remove("nobar");
+            if (tabPane.getTabs().size() < 2) {
+                tabPane.getStyleClass().add("nobar");
+            } else {
+                tabPane.getStyleClass().remove("nobar");
+            }
         });
 
         newTab(args.stream().map(File::new).filter(File::isFile));
-        if (tabPane.getTabs().isEmpty()) newTab();
+        if (tabPane.getTabs().isEmpty()) {
+            newTab();
+        }
     }
 
     @FXML
     private void dragOver(DragEvent e) {
-        if (e.getDragboard().hasFiles() || e.getDragboard().hasImage())
+        if (e.getDragboard().hasFiles() || e.getDragboard().hasImage()) {
             e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
         e.consume();
     }
 
     @FXML
     private void dragDropped(DragEvent e) {
-        if (e.getDragboard().hasFiles()) newTab(e.getDragboard().getFiles().stream());
+        if (e.getDragboard().hasFiles()) {
+            newTab(e.getDragboard().getFiles().stream());
+        }
         e.setDropCompleted(true);
         e.consume();
     }
@@ -64,8 +71,11 @@ public class MainFrame extends BorderPane {
     @FXML
     private void save() {
         EditorTab selected = (EditorTab) tabPane.getSelectionModel().getSelectedItem();
-        if (selected.hasFile()) selected.save();
-        else saveWithName();
+        if (selected.hasFile()) {
+            selected.save();
+        } else {
+            saveWithName();
+        }
     }
 
     @FXML
@@ -86,5 +96,4 @@ public class MainFrame extends BorderPane {
     private void newTab(Stream<File> files) {
         files.map(EditorTab::new).forEachOrdered(this::newTab);
     }
-
 }

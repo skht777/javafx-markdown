@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.skht777.markdown;
 
 import org.mozilla.universalchardet.UniversalDetector;
@@ -15,7 +12,6 @@ import java.util.Optional;
  * @author skht777
  */
 public class CharacterStream {
-
     private Charset charset;
     private String decoded;
 
@@ -51,5 +47,4 @@ public class CharacterStream {
         detector.dataEnd();
         return Charset.forName(Optional.ofNullable(detector.getDetectedCharset()).orElse("UTF-8"));
     }
-
 }

@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.skht777.markdown;
 
 import javafx.application.Application;
@@ -11,7 +8,6 @@ import javafx.stage.Stage;
  * @author skht777
  */
 public class Main extends Application {
-
     @Override
     public void start(Stage primaryStage) {
         try {

@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.skht777.markdown;
 
 import javafx.fxml.FXML;
@@ -24,7 +21,6 @@ import java.util.function.Consumer;
  * @author skht777
  */
 public class EditorController implements Initializable {
-
     @FXML
     private WebView view;
     @FXML
@@ -35,8 +31,11 @@ public class EditorController implements Initializable {
     @FXML
     public void convertMarkdown() {
         Consumer<JSObject> consumer = js -> js.call("mark", text.getText());
-        if (Optional.ofNullable(window).isPresent()) consumer.accept(window);
-        else runLater.add(consumer);
+        if (Optional.ofNullable(window).isPresent()) {
+            consumer.accept(window);
+        } else {
+            runLater.add(consumer);
+        }
     }
 
     public void setText(String value) {
@@ -46,7 +45,9 @@ public class EditorController implements Initializable {
 
     public void print() {
         Optional.ofNullable(PrinterJob.createPrinterJob()).ifPresent(pjob -> {
-            if (pjob.showPrintDialog(view.getScene().getWindow())) view.getEngine().print(pjob);
+            if (pjob.showPrintDialog(view.getScene().getWindow())) {
+                view.getEngine().print(pjob);
+            }
             pjob.endJob();
         });
     }
@@ -70,5 +71,4 @@ public class EditorController implements Initializable {
             }
         });
     }
-
 }
