@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+
+<MenuBar xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1"
+         fx:controller="com.skht777.markdown.MenuBarController" useSystemMenuBar="true">
+    <Menu mnemonicParsing="false" text="File">
+        <MenuItem mnemonicParsing="false" onAction="#addTab" text="New"/>
+        <MenuItem mnemonicParsing="false" onAction="#open" text="Open"/>
+        <MenuItem mnemonicParsing="false" onAction="#save" text="Save"/>
+        <MenuItem mnemonicParsing="false" onAction="#saveWithName" text="Save As..."/>
+        <MenuItem mnemonicParsing="false" onAction="#saveAsHTML" text="Save As HTML"/>
+        <MenuItem mnemonicParsing="false" onAction="#print" text="Print"/>
+        <MenuItem mnemonicParsing="false" text="Exit"/>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Edit">
+        <MenuItem mnemonicParsing="false" text="Delete"/>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Help">
+        <MenuItem mnemonicParsing="false" text="About"/>
+    </Menu>
+</MenuBar>

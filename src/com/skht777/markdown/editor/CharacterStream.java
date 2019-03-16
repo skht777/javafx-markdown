@@ -1,4 +1,4 @@
-package com.skht777.markdown;
+package com.skht777.markdown.editor;
 
 import org.mozilla.universalchardet.UniversalDetector;
 

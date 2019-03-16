@@ -1,12 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.beans.property.SimpleStringProperty?>
 <?import javafx.scene.control.Tab?>
-<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.*?>
 
-<fx:root type="Tab" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <BorderPane style="-fx-padding: 1 0 0 0">
+<Tab text="${nameProperty.valueSafe}" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
+     fx:controller="com.skht777.markdown.editor.TabController">
+    <fx:define>
+        <SimpleStringProperty fx:id="nameProperty"/>
+    </fx:define>
+    <BorderPane stylesheets="@editor.css" styleClass="border-pane">
         <center>
-            <fx:include fx:id="editor" source="editor.fxml"/>
+            <GridPane gridLinesVisible="true">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="ALWAYS" percentHeight="100"/>
+                </rowConstraints>
+                <fx:include fx:id="textArea" source="textarea.fxml" border="${null}"/>
+                <fx:include fx:id="preview" source="preview.fxml" GridPane.columnIndex="1"/>
+            </GridPane>
         </center>
     </BorderPane>
-</fx:root>
+</Tab>

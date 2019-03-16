@@ -1,37 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
 <?import javafx.scene.layout.BorderPane?>
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1"
             fx:controller="com.skht777.markdown.MainController">
     <center>
-        <TabPane fx:id="tabPane" onDragDropped="#dragDropped" onDragOver="#dragOver" stylesheets="@main.css"/>
+        <fx:include fx:id="editorGroup" source="editorGroup.fxml" onDragDropped="#dragDropped" onDragOver="#dragOver"/>
     </center>
     <top>
-        <MenuBar fx:id="menu" BorderPane.alignment="CENTER">
-            <menus>
-                <Menu mnemonicParsing="false" text="File">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#addTab" text="New"/>
-                        <MenuItem mnemonicParsing="false" onAction="#open" text="Open"/>
-                        <MenuItem mnemonicParsing="false" onAction="#save" text="Save"/>
-                        <MenuItem mnemonicParsing="false" onAction="#saveWithName" text="Save As..."/>
-                        <MenuItem mnemonicParsing="false" onAction="#print" text="Print"/>
-                        <MenuItem mnemonicParsing="false" text="Exit"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Edit">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="Delete"/>
-                    </items>
-                </Menu>
-                <Menu mnemonicParsing="false" text="Help">
-                    <items>
-                        <MenuItem mnemonicParsing="false" text="About"/>
-                    </items>
-                </Menu>
-            </menus>
-        </MenuBar>
+        <fx:include fx:id="menuBar" source="menu.fxml" BorderPane.alignment="CENTER"/>
     </top>
 </BorderPane>

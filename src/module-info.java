@@ -9,4 +9,6 @@ module com.skht.markdown {
     requires jdk.jsobject;
     exports com.skht777.markdown to javafx.graphics;
     opens com.skht777.markdown to javafx.fxml;
+    exports com.skht777.markdown.editor to javafx.graphics;
+    opens com.skht777.markdown.editor to javafx.fxml;
 }
