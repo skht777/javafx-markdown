@@ -8,11 +8,11 @@ import javafx.stage.Stage;
 /**
  * @author skht777
  */
-public class Main extends Application {
+public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(MainController.class.getResource("fxml/main.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/main.fxml"));
             primaryStage.setScene(new Scene(loader.load(), 800.0, 620.0));
             loader.<MainController>getController()
                     .init(primaryStage.getScene().getWindow(), getParameters().getUnnamed());

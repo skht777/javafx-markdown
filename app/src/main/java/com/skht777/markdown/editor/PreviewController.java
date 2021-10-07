@@ -57,7 +57,7 @@ public class PreviewController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         engine = view.getEngine();
-        engine.load(getClass().getResource("/resources/web/markdown.html").toExternalForm());
+        engine.load(getClass().getResource("web/markdown.html").toExternalForm());
         engine.setOnAlert(e -> {
             if ("command:ready".equals(e.getData())) {
                 viewOnReady = true;
