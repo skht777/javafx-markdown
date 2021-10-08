@@ -21,12 +21,8 @@ public class TextAreaController implements Initializable {
         return textArea.textProperty();
     }
 
-    public void setFromFile(File file) {
-        try {
-            getTextProperty().setValue(CharacterStream.decodeString(file));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public void setStringFromFile(File file) throws IOException {
+        getTextProperty().setValue(CharacterStream.decodeString(file));
     }
 
     @Override

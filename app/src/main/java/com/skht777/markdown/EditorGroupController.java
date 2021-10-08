@@ -1,20 +1,18 @@
 package com.skht777.markdown;
 
-import com.skht777.markdown.editor.TabController;
 import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.TransferMode;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -23,47 +21,73 @@ import java.util.ResourceBundle;
 public class EditorGroupController implements Initializable {
     @FXML
     private TabPane tabPane;
-    private Map<Tab, TabController> tabMap;
+    private TabManager<TabController> tabManager;
     private int countNew = 1;
 
-    ObservableList<Tab> getTabs() {
-        return tabPane.getTabs();
+    void init(List<File> files) {
+        files.forEach(this::addTabSafe);
+        if (tabPane.getTabs().isEmpty()) {
+            addEmptyTab();
+        }
     }
 
     TabController getSelectedTab() {
-        return tabMap.getOrDefault(tabPane.getSelectionModel().getSelectedItem(), null);
+        return tabManager.getSelectedTab();
     }
 
-    Tab createTab() {
-        return createTab(null);
-    }
-
-    Tab createTab(File file) {
+    private TabController loadTab() {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("fxml/tab.fxml"));
-            Tab tab = loader.load();
-            TabController controller = loader.getController();
-            Optional.ofNullable(file)
-                    .ifPresentOrElse(controller.getFileProperty()::setValue,
-                            () -> controller.getNameProperty().setValue("New " + countNew++));
-            tabMap.put(tab, controller);
-            return tab;
+            return tabManager.loadTab(getClass().getResource("fxml/tab.fxml"));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
+    void addEmptyTab() {
+        loadTab().getNameProperty().setValue("New " + countNew++);
+    }
+
+    void addTabSafe(File file) {
+        try {
+            addTab(file);
+        } catch (IOException e) {
+            new Alert(Alert.AlertType.ERROR, "Error occurred while").show();
+            e.printStackTrace();
+        }
+    }
+
+    void addTab(File file) throws IOException {
+        loadTab().setFileWithLoad(file);
+    }
+
+    @FXML
+    private void dragOver(DragEvent e) {
+        if (e.getDragboard().hasFiles() || e.getDragboard().hasImage()) {
+            e.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        }
+        e.consume();
+    }
+
+    @FXML
+    private void dragDropped(DragEvent e) {
+        if (e.getDragboard().hasFiles()) {
+            e.getDragboard().getFiles().forEach(this::addTabSafe);
+        }
+        e.setDropCompleted(true);
+        e.consume();
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tabMap = new HashMap<>();
+        tabManager = new TabManager<>(tabPane);
         tabPane.setTabDragPolicy(TabPane.TabDragPolicy.REORDER);
-        getTabs().addListener((ListChangeListener<Tab>) c -> {
+        tabPane.getTabs().addListener((ListChangeListener<Tab>) c -> {
             while (c.next()) {
                 if (c.wasAdded()) {
                     tabPane.getSelectionModel().select(c.getList().get(c.getList().size() - 1));
                 }
-                if (c.wasRemoved() && getTabs().isEmpty()) {
-                    getTabs().add(createTab());
+                if (c.wasRemoved() && tabPane.getTabs().isEmpty()) {
+                    addEmptyTab();
                 }
             }
         });

@@ -23,7 +23,7 @@ public class PreviewController implements Initializable {
     private boolean viewOnReady;
     private StringProperty textProperty;
 
-    void setTextProperty(StringProperty textProperty) {
+    public void setTextProperty(StringProperty textProperty) {
         this.textProperty = textProperty;
         this.textProperty.addListener((v, o, n) -> convertMarkdown(n));
     }

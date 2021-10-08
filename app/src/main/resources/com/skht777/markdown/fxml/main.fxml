@@ -5,7 +5,7 @@
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1"
             fx:controller="com.skht777.markdown.MainController">
     <center>
-        <fx:include fx:id="editorGroup" source="editorGroup.fxml" onDragDropped="#dragDropped" onDragOver="#dragOver"/>
+        <fx:include fx:id="editorGroup" source="editorGroup.fxml"/>
     </center>
     <top>
         <fx:include fx:id="menuBar" source="menu.fxml" BorderPane.alignment="CENTER"/>

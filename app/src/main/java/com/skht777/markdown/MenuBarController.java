@@ -1,7 +1,5 @@
 package com.skht777.markdown;
 
-import com.skht777.markdown.editor.CharacterStream;
-import com.skht777.markdown.editor.TabController;
 import javafx.beans.property.ObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -57,9 +55,7 @@ public class MenuBarController implements Initializable {
             return;
         }
         try {
-            TabController tab = editor.getSelectedTab();
-            tab.getEditor().getTextProperty().setValue(CharacterStream.decodeString(file));
-            tab.getFileProperty().setValue(file);
+            editor.addTab(file);
         } catch (IOException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to open").show();
             e.printStackTrace();
@@ -100,7 +96,7 @@ public class MenuBarController implements Initializable {
 
     @FXML
     private void addTab() {
-        editor.getTabs().add(editor.createTab());
+        editor.addEmptyTab();
     }
 
     @Override

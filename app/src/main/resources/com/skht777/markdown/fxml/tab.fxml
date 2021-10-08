@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.beans.property.SimpleStringProperty?>
+<?import javafx.beans.property.SimpleObjectProperty?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.*?>
 
-<Tab text="${nameProperty.valueSafe}" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
-     fx:controller="com.skht777.markdown.editor.TabController">
+<Tab fx:id="tab" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1"
+     fx:controller="com.skht777.markdown.TabController">
     <fx:define>
-        <SimpleStringProperty fx:id="nameProperty"/>
+        <SimpleObjectProperty fx:id="fileProperty"/>
     </fx:define>
     <BorderPane stylesheets="@editor.css" styleClass="border-pane">
         <center>
