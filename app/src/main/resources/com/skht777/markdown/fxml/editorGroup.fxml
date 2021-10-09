@@ -3,5 +3,5 @@
 <?import javafx.scene.control.TabPane?>
 
 <TabPane fx:id="tabPane" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1"
-         fx:controller="com.skht777.markdown.EditorGroupController" stylesheets="@tabPane.css"
+         fx:controller="com.skht777.markdown.EditorGroupController" stylesheets="@../style/tabPane.css"
          onDragDropped="#dragDropped" onDragOver="#dragOver"/>

@@ -9,7 +9,7 @@
     <fx:define>
         <SimpleObjectProperty fx:id="fileProperty"/>
     </fx:define>
-    <BorderPane stylesheets="@editor.css" styleClass="border-pane">
+    <BorderPane stylesheets="@../style/editor.css" styleClass="border-pane">
         <center>
             <GridPane gridLinesVisible="true">
                 <columnConstraints>
