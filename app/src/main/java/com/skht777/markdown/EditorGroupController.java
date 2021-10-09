@@ -22,7 +22,6 @@ public class EditorGroupController implements Initializable {
     @FXML
     private TabPane tabPane;
     private TabManager<TabController> tabManager;
-    private int countNew = 1;
 
     void init(List<File> files) {
         files.forEach(this::addTabSafe);
@@ -44,7 +43,7 @@ public class EditorGroupController implements Initializable {
     }
 
     void addEmptyTab() {
-        loadTab().getNameProperty().setValue("New " + countNew++);
+        loadTab().init();
     }
 
     void addTabSafe(File file) {

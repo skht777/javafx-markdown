@@ -12,8 +12,8 @@ import java.util.Optional;
  * @author skht777
  */
 public class CharacterStream {
-    private Charset charset;
-    private String decoded;
+    private final Charset charset;
+    private final String decoded;
 
     public CharacterStream(File file, Charset charset) throws IOException {
         byte[] buff = Files.readAllBytes(file.toPath());
@@ -26,11 +26,11 @@ public class CharacterStream {
     }
 
     public static String decodeString(File file, Charset charset) throws IOException {
-        return new CharacterStream(file, charset).getString();
+        return new CharacterStream(file, charset).decoded;
     }
 
     public static String decodeString(File file) throws IOException {
-        return new CharacterStream(file).getString();
+        return decodeString(file, null);
     }
 
     public String getString() {
@@ -45,6 +45,7 @@ public class CharacterStream {
         UniversalDetector detector = new UniversalDetector(null);
         detector.handleData(buff, 0, buff.length);
         detector.dataEnd();
-        return Charset.forName(Optional.ofNullable(detector.getDetectedCharset()).orElse("UTF-8"));
+        return Optional.ofNullable(detector.getDetectedCharset()).map(Charset::forName)
+                .orElse(Charset.defaultCharset());
     }
 }

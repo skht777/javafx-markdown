@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.beans.property.SimpleObjectProperty?>
 <?import javafx.scene.control.TextArea?>
 
 <TextArea fx:id="textArea" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/9.0.1"
-          fx:controller="com.skht777.markdown.editor.TextAreaController"/>
+          fx:controller="com.skht777.markdown.editor.TextAreaController">
+    <fx:define>
+        <SimpleObjectProperty fx:id="encodingProperty"/>
+        <SimpleObjectProperty fx:id="lineSeparatorProperty"/>
+    </fx:define>
+</TextArea>

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.beans.property.SimpleObjectProperty?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.*?>
 
@@ -23,5 +24,18 @@
                 <fx:include fx:id="preview" source="preview.fxml" GridPane.columnIndex="1"/>
             </GridPane>
         </center>
+        <bottom>
+            <GridPane>
+                <columnConstraints>
+                    <ColumnConstraints hgrow="SOMETIMES" percentWidth="50.0"/>
+                    <ColumnConstraints hgrow="SOMETIMES"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints vgrow="SOMETIMES"/>
+                </rowConstraints>
+                <Label fx:id="lineSeparatorLabel"/>
+                <Label fx:id="encodingLabel" GridPane.columnIndex="1"/>
+            </GridPane>
+        </bottom>
     </BorderPane>
 </Tab>
